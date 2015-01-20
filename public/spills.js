@@ -1,7 +1,6 @@
 var width = window.innerWidth;
 var height = window.innerHeight;
 var r = 5;
-var dataset;
 
 var spills = d3.map();
 
@@ -21,40 +20,19 @@ var svg = d3.select("body").append("svg")
 var circles = svg.append("svg:g")
   .attr("id", "circles");
 
-var mouse = { x: width/2, y: height/2 };
-var pixelize = function(number){ return number + 'px'; }
+///////////////////////////////////////////////////////////////////
+
+
 
 ///////////////////////////////////////////////////////////////////
 
-// var mapBoard = d3.select('.mapBoard').style({
-//   width: pixelize( width ),
-//   height: pixelize( height )
-// });
-
-// d3.select('.mouse').style({
-//   top: pixelize( mouse.y ),
-//   left: pixelize( mouse.x ),
-//   width: pixelize( r*2 ),
-//   height: pixelize( r*2 ),
-//   'border-radius': pixelize( r*2 )
-// });
-
-// var spills = mapBoard.selectAll('.spills')
-//   .data(d3.range(settings.n))
-//   .enter().append('div')
-//   .attr('class', 'spill')
-//   .style({
-//     width: pixelize( r*2 ),
-//     height: pixelize( r*2 )
-//   });
-
-var spillData = d3.csv("./spills.csv")
+var spillData = d3.csv("./spills2.csv")
   .row(function(d) {
     return {
       report_num: +d.report_num,
       significant: +d.significant,
-      lat: +d.lat,
-      long: +d.long
+      long: +d.long,
+      lat: +d.lat
     };
   })
   .get(function callback(error, rows) {
@@ -62,11 +40,8 @@ var spillData = d3.csv("./spills.csv")
     circles.selectAll('.spills')
       .data(rows)
       .enter().append('svg:circle')
-        // .attr('class', 'spills')
-        // .append('svg:circle')
-        // .attr('class', 'symbol')
         .attr('class', function(d) { return 'sig' + d.significant; })
+        .attr('r', r)
         .attr('cx', function(d) { return projection([d.long, d.lat])[0]; })
         .attr('cy', function(d) { return projection([d.long, d.lat])[1]; })
-        .attr('r', r)
   });
