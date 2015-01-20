@@ -1,10 +1,37 @@
-<HTML>
-<HEAD>
-  <TITLE>Spilling Me Softly</TITLE>
+<html>
+<head>
+  <title>Spilling Me Softly</title>
+  <style>
+
+  .graticule {
+    fill: none;
+    stroke: #777;
+    stroke-width: .5px;
+    stroke-opacity: .5;
+  }
+
+  .land {
+    fill: #222;
+  }
+
+  .county-boundary {
+    fill: none;
+    stroke: #fff;
+    stroke-width: .5px;
+  }
+
+  .state-boundary {
+    fill: none;
+    stroke: #fff;
+  }
+
+  </style>
+</head>
+<body>
+  <script src="/lib/jquery.js" charset="utf-8"></script>
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-  <script src="mapD3.js" charset="utf-8"></script>
-</HEAD>
-<BODY>
-  
-</BODY>
-</HTML>
+  <script src="http://d3js.org/queue.v1.min.js"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>
+  <script src="./spills.js" charset="utf-8"></script>
+</body>
+</html>
