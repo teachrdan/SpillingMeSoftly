@@ -18,6 +18,9 @@ var svg = d3.select("body").append("svg")
   .attr("width", width)
   .attr("height", height);
 
+var circles = svg.append("svg:g")
+  .attr("id", "circles");
+
 var mouse = { x: width/2, y: height/2 };
 var pixelize = function(number){ return number + 'px'; }
 
@@ -45,30 +48,25 @@ var pixelize = function(number){ return number + 'px'; }
 //     height: pixelize( r*2 )
 //   });
 
-var spillData = d3.csv("./spills.csv", function(d) {
-  return {
-    report_number: +d.report_number,
-    significant: !!d.significant,
-    location_latitude: +d.location_latitude,
-    location_longitude: +d.location_longitude
-  };
-}, function(error, data) {
-  if (error) {
-    console.log('error', error);
-  } else { 
-    dataset = data;
-    console.log(dataset);
-  }
-});
-
-d3.select('body')
-  .selectAll('p')
-  .data(dataset)
-  .append('p')
-  .text(function(d){return d.report_number;});
-//   .d3.selectAll('spills')
-//   .append("circle")
-//   .attr("r", r)
-//   .attr("transform", function(d) {
-//     return "translate(" + projection([d.location_longitude, d.location_latitude]) + ")";
-//   });
+var spillData = d3.csv("./spills.csv")
+  .row(function(d) {
+    return {
+      report_num: +d.report_num,
+      significant: +d.significant,
+      lat: +d.lat,
+      long: +d.long
+    };
+  })
+  .get(function callback(error, rows) {
+    console.log('rows', rows[0]);
+    circles.selectAll('.spills')
+      .data(rows)
+      .enter().append('svg:circle')
+        // .attr('class', 'spills')
+        // .append('svg:circle')
+        // .attr('class', 'symbol')
+        .attr('class', function(d) { return 'sig' + d.significant; })
+        .attr('cx', function(d) { return projection([d.long, d.lat])[0]; })
+        .attr('cy', function(d) { return projection([d.long, d.lat])[1]; })
+        .attr('r', r)
+  });

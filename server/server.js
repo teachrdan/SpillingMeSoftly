@@ -3,10 +3,10 @@ var express     = require('express'),
 
 var app = express();
 
-mongoose.connect('mongodb://localhost/shortly'); // connect to mongo database named shortly
+mongoose.connect('mongodb://localhost/spills');
 
 // configure our server with all the middleware and and routing
-require('./config/middleware.js')(app, express);
+// require('middleware')(app, express);
 
 // export our app for testing and flexibility, required by index.js
 module.exports = app;
