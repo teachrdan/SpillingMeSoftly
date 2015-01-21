@@ -1,9 +1,17 @@
 h1 {
   text-align: center;
+  font-family: sans-serif;
 }
 
 h2 {
-  text-align: center;
+  text-align: left;
+  margin-left: 10%;
+}
+
+footer {
+  text-align: left;
+  font-family: sans-serif;
+  font-style: italic;
 }
 
 .background {
@@ -12,7 +20,7 @@ h2 {
 }
 
 #states {
-  fill: #aaa;
+  fill: #007b00;
 }
 
 #state-borders {

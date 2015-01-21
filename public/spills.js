@@ -1,6 +1,6 @@
 var width = window.innerWidth;
 var height = window.innerHeight;
-var r = 5;
+var r = 4;
 
 var spills = d3.map();
 
@@ -39,7 +39,7 @@ g.append("path")
 });
 
 ///////////////////////////////////////////////////////////////////
-
+// FOR TESTING PURPOSES
 // function testGPS(coordinates) {
 //   var x = coordinates[0], y = coordinates[1];
 //   point = null;
@@ -53,7 +53,6 @@ g.append("path")
 // });
 
 ///////////////////////////////////////////////////////////////////
-
 
 var spillData = d3.csv("./spills3.csv")
   .row(function(d) {
@@ -75,10 +74,10 @@ var spillData = d3.csv("./spills3.csv")
           else { return 'sig' + 0 }
         })
         .attr('r', function(d) { 
-          if (d.significant === 1) {
-          return r+1;
-        } else {
+          if (d.significant === 'true') {
           return r;
+        } else {
+          return r-1;
         }
         })
         .attr('test', function(d) {
