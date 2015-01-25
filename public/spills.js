@@ -47,46 +47,38 @@ g.append("path")
 //   return point;
 // }
 
-// .attr('test', function(d) { if (testGPS([d.long, d.lat]) === null) {
+// .attr('test', function(d) { if (testGPS([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE]) === null) {
 //   console.log('the error is', data);
 // }
 // });
 
 ///////////////////////////////////////////////////////////////////
 
-var spillData = d3.csv("./spills3.csv")
-  .row(function(d) {
-    return {
-      report_num: +d.report_num,
-      report_received: d.report_received,
-      co_name: d.co_name,
-      significant: d.significant,
-      lat: +d.lat,
-      long: +d.long
-    };
-  })
-  .get(function callback(error, rows) {
-    console.log('rows[0]', rows[0]);
-    circles.selectAll('.spills')
-      .data(rows)
-      .enter().append('svg:circle')
-        .attr('class', function(d) { if (d.significant === 'true') { return 'sig' + 1; }
-          else { return 'sig' + 0 }
-        })
-        .attr('r', function(d) { 
-          if (d.significant === 'true') {
-          return r;
-        } else {
-          return r-1;
-        }
-        })
-        .attr('test', function(d) {
-          if (projection([d.long, d.lat]) === null) {
-            console.log('bad data', d);
-          }
-        })
-    .attr('cx', function(d) { return projection([d.long, d.lat])[0]; })
-    .attr('cy', function(d) { return projection([d.long, d.lat])[1]; })
-    .append("svg:title")
-    .text(function(d) { return d.co_name; })
+var spillData = d3.tsv("./spills.tsv", function(data) {
+  console.log('data[0]', data[0]);
+  // console.log('data[0]["LOCATION_LONGITUDE"]', data[0]["LOCATION_LONGITUDE"]);
+  data.forEach(function(d) {
+    // d.report_num = +d.report_num;
+    // d.report_received = d.report_received;
+    // d.co_name = d.co_name;
+    // d.significant = d.significant;
+    d.LOCATION_LATITUDE = +d.LOCATION_LATITUDE;
+    d.LOCATION_LONGITUDE = +d.LOCATION_LONGITUDE;
+    // d.narrative = d.narrative;
+  });
+  
+  circles.selectAll('.spills')
+    .data(data)
+    .enter().append('svg:circle')
+      .attr('class', function(d) { if (d.SIGNIFICANT === 'YES') { return 'sig' + 1; }
+        else { return 'sig' + 0 } })
+      .attr('r', function(d) { 
+        if (d.SIGNIFICANT === 'YES') { return r;
+      } else { return r-1; } })
+      .attr('test', function(d) {
+        if (projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE]) === null) {
+          console.log('bad data', d.REPORT_NUMBER, d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE);
+        }})
+  .attr('cx', function(d) { return projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE])[0]; })
+  .attr('cy', function(d) { return projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE])[1]; })
 });
