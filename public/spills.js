@@ -58,24 +58,23 @@ var spillData = d3.tsv("./spills.tsv", function(data) {
   console.log('data[0]', data[0]);
   // console.log('data[0]["LOCATION_LONGITUDE"]', data[0]["LOCATION_LONGITUDE"]);
   data.forEach(function(d) {
-    // d.report_num = +d.report_num;
-    // d.report_received = d.report_received;
-    // d.co_name = d.co_name;
-    // d.significant = d.significant;
-    d.LOCATION_LATITUDE = +d.LOCATION_LATITUDE;
-    d.LOCATION_LONGITUDE = +d.LOCATION_LONGITUDE;
-    // d.narrative = d.narrative;
+    // Function kept in case data needs to be converted before added to d
+    // d.LOCATION_LONGITUDE = +d.LOCATION_LONGITUDE;
   });
   
   circles.selectAll('.spills')
     .data(data)
     .enter().append('svg:circle')
-      .attr('class', function(d) { if (d.SIGNIFICANT === 'YES') { return 'sig' + 1; }
+      .attr('class', function(d) { 
+        if (d.SIGNIFICANT === 'YES') { return 'sig' + 1; }
         else { return 'sig' + 0 } })
       .attr('r', function(d) { 
-        if (d.SIGNIFICANT === 'YES') { return r;
-      } else { return r-1; } })
+        if (d.SIGNIFICANT === 'YES') { return r; }
+        else { return r-1; } })
       .attr('test', function(d) {
+        // the D3 projection() function will fail silently if it gets coordinates that appear
+        // off the map - in this case, the Albers projection of the US map.
+        // This test will console log the coordinates that make projection() fail.
         if (projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE]) === null) {
           console.log('bad data', d.REPORT_NUMBER, d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE);
         }})
