@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <h2>#SpillingMeSoftly: An interactive map of pipeline spills in the US</h2>
+  <h2>#SpillingMeSoftly: Pipeline spills in the United States, 2010 to 2014</h2>
   <script src="/lib/jquery.js" charset="utf-8"></script>
   <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" />
@@ -12,38 +12,43 @@
   <script src="http://d3js.org/topojson.v1.min.js"></script>
   <script src="./spills.js" charset="utf-8"></script>
 
-  <div id="slider" style="width: 200px;"></div>
-
-<p>
-  <label for="year">Year :</label>
-  <input type="text" id="year" style="border:0; color:#f6931f; font-weight:bold; " value="2014"/>
-</p>
+  <div style="margin-left:45%">
+    <div id="slider" style="width: 200px; height: 10px;"></div>
+    <p>
+      <label for="date">Spill Reported:</label>
+      <input type="text" id="date" style="border:0; color:#f6931f; font-weight:bold;" value="March 10, 2010" />
+    </p>
+  </div>
 <script type="text/javascript">
-  // Coded by Patrick.Brockmann@lsce.ipsl.fr
 
   $(document).ready(function() {
     $("#slider").slider({
       value: 2014,
-      min: 2010,
-      max: 2014,
-      step: 1,
-      slide: function( event, ui ) {
+      min: 1268179200000, //UTC of the first report_received_date in TSV, '3/10/2010'
+      max: 1409097600000, //UTC of the last report_received_date in TSV, '8/27/2014'
+      step: 7,
+      slide: function(event, ui) {
         console.log('event', event);
         console.log('ui', ui);
-        $("#year").val(ui.value);
+
+        var temp = new Date(ui.value);
+        var m_names = ["January", "February", "March", "April", "May", "June", "July","August", "September", "October", "November", "December"];
+        var month = m_names[temp.getMonth()];
+        // Add + 1 to day, to compensate for UTC vs. US time zones.
+        displayDate = '' + month + ' ' + (temp.getDate() + 1) + ', ' + temp.getFullYear();
+        $("#date").val(displayDate);
         // redraw(ui.value.toString());
       }
     });
   });
-
-  $("#year").val($("#slider").slider("value"));
+  $("#date").val($("#slider").slider("value"));
 </script>
 <footer>
 Version: 1/26/2015<br>
-Data Driven Document<br>
-Created by Dan Tennery-Spalding<br>
+Dan Tennery-Spalding<br>
 @teachrdan (everything)<br>
-Special thanks to ProPublica and the US Department of Transportation
+Thanks to M. Bostock, ProPublica<br>
+& the US Department of Transportation
 </footer>
 </body>
 </html>
