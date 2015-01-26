@@ -16,20 +16,22 @@
 
 <p>
   <label for="year">Year :</label>
-  <input type="text" id="year" style="border:0; color:#f6931f; font-weight:bold; " />
+  <input type="text" id="year" style="border:0; color:#f6931f; font-weight:bold; " value="2014"/>
 </p>
 <script type="text/javascript">
   // Coded by Patrick.Brockmann@lsce.ipsl.fr
 
   $(document).ready(function() {
     $("#slider").slider({
-      value: 2000,
-      min: 1971,
-      max: 2006,
+      value: 2014,
+      min: 2010,
+      max: 2014,
       step: 1,
       slide: function( event, ui ) {
+        console.log('event', event);
+        console.log('ui', ui);
         $("#year").val(ui.value);
-        redraw(ui.value.toString());
+        // redraw(ui.value.toString());
       }
     });
   });
