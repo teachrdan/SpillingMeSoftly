@@ -38,20 +38,25 @@ g.append("path")
   .attr("d", path);
 });
 
+
 ///////////////////////////////////////////////////////////////////
-// FOR TESTING PURPOSES
-// function testGPS(coordinates) {
-//   var x = coordinates[0], y = coordinates[1];
-//   point = null;
-//   (lower48Point(x, y), point) || (alaskaPoint(x, y), point) || hawaiiPoint(x, y);
-//   return point;
-// }
-
-// .attr('test', function(d) { if (testGPS([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE]) === null) {
-//   console.log('the error is', data);
-// }
-// });
-
+// Helper Functions
+// 
+// toUTC converts JS Date objects to UTC
+// EXAMPLE: var date = new Date('3/10/2010');
+// toUTC(date); // evaluates to 1268179200000
+var toUTC = function(date) {
+  return Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+      date.getMilliseconds()
+  );
+};
+// 
 ///////////////////////////////////////////////////////////////////
 
 var spillData = d3.tsv("./spills.tsv", function(data) {
