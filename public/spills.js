@@ -70,8 +70,6 @@ var globalData;
 
 var redraw = function(utc) { 
   var filteredData = [];
-  // console.log('globalData[0]', globalData[0]);
-  console.log(globalData[0]['REPORT_RECEIVED_DATE']);
   for (var i = 0; i < globalData.length; i++) {
     var selectUtc = new Date(globalData[i]['REPORT_RECEIVED_DATE']);
     if (toUTC(selectUtc) <= utc) {
@@ -84,22 +82,20 @@ var redraw = function(utc) {
   circles.selectAll('.spills')
   .data(filteredData)
   .enter().append('svg:circle')
-    .attr('class', function(d) { 
+    .attr('class', function(d) {
       if (d.SIGNIFICANT === 'YES') { return 'sig' + 1; }
       else { return 'sig' + 0 } })
-    .attr('r', function(d) { 
-      if (d.SIGNIFICANT === 'YES') { return r; }
-      else { return r-1; } })
+    .attr('r', function(d) {
+      if (utc >= d.UTC && d.UTC >= utc - 604800000) { return r + 4; }
+      else if (d.SIGNIFICANT === 'YES') { return r; }
+      else { return r - 1; } })
   .attr('cx', function(d) { return projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE])[0]; })
   .attr('cy', function(d) { return projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE])[1]; })
 };
 
 var spillData = d3.tsv("./spills.tsv", function(data) {
   globalData = data;
-  // console.log('data[0]["LOCATION_LONGITUDE"]', data[0]["LOCATION_LONGITUDE"]);
   data.forEach(function(d) {
-    // Function kept in case data needs to be converted before added to d
-    // d.LOCATION_LONGITUDE = +d.LOCATION_LONGITUDE;
     d.UTC = +toUTC(new Date(d.REPORT_RECEIVED_DATE));
   });
 });
