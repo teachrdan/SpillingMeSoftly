@@ -6,9 +6,42 @@
 <body>
   <h2>#SpillingMeSoftly: An interactive map of pipeline spills in the US</h2>
   <script src="/lib/jquery.js" charset="utf-8"></script>
+  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" />
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script src="http://d3js.org/topojson.v1.min.js"></script>
   <script src="./spills.js" charset="utf-8"></script>
-  <footer>Special thanks to ProPublica and the US Department of Transportation</footer>
+
+  <div id="slider" style="width: 200px;"></div>
+
+<p>
+  <label for="year">Year :</label>
+  <input type="text" id="year" style="border:0; color:#f6931f; font-weight:bold; " />
+</p>
+<script type="text/javascript">
+  // Coded by Patrick.Brockmann@lsce.ipsl.fr
+
+  $(document).ready(function() {
+    $("#slider").slider({
+      value: 2000,
+      min: 1971,
+      max: 2006,
+      step: 1,
+      slide: function( event, ui ) {
+        $("#year").val(ui.value);
+        redraw(ui.value.toString());
+      }
+    });
+  });
+
+  $("#year").val($("#slider").slider("value"));
+</script>
+<footer>
+Version: 1/26/2015<br>
+Data Driven Document<br>
+Created by Dan Tennery-Spalding<br>
+@teachrdan (everything)<br>
+Special thanks to ProPublica and the US Department of Transportation
+</footer>
 </body>
 </html>
