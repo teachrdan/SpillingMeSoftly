@@ -1,50 +1,58 @@
+var circles;
+var projection;
 
-var width = window.innerWidth;
-var height = window.innerHeight;
-var r = 4;
+var resize = function() {
+  // Calculate the height of the content div, minus the heights of the header and footer.
+  var contentHeight = $('#container').outerHeight(true) - $('#header').outerHeight(true) - $('#footer').outerHeight(true);
+  $('#content').height(contentHeight);
+  $('#map').html('');
+  drawMap();
+};
 
-var spills = d3.map();
 
-var zoom = d3.behavior.zoom()
-  .translate([0, 0])
-  .scale(1)
-  .scaleExtent([1, 8])
-  .on("zoom", zoomed);
+var drawMap = function() {
 
-var quantize = d3.scale.quantize()
-  .domain([0, .15])
-  .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
+  var height = $('#content').height() - $('#sliderContainer').outerHeight(true);
+  var width = height * 1.6;
 
-var projection = d3.geo.albersUsa();
+  var spills = d3.map();
 
-var path = d3.geo.path()
-  .projection(projection);
+  var quantize = d3.scale.quantize()
+    .domain([0, .15])
+    .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
 
-var svg = d3.select("body").append("svg")
-  .attr("width", width)
-  .attr("height", height)
-  .call(zoom);
+  projection = d3.geo.albersUsa()
+    .scale(height * 2) // Not sure why I have to augment the height, either.
+    .translate([width / 2, height / 2]);
 
-var g = svg.append("g");
+  var path = d3.geo.path()
+    .projection(projection);
 
-var circles = svg.append("svg:g")
-  .attr("id", "circles");
+  var svg = d3.select("#map").append("svg")
+    .attr("width", width)
+    .attr("height", height);
 
-///////////////////////////////////////////////////////////////////
+  var g = svg.append("g");
 
-d3.json("./us.json", function(error, us) {
-  g.append("g")
-    .attr("id", "states")
-    .selectAll("path")
-      .data(topojson.feature(us, us.objects.states).features)
-    .enter().append("path")
-      .attr("d", path)
+  circles = svg.append("svg:g")
+    .attr("id", "circles");
 
-g.append("path")
-  .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-  .attr("id", "state-borders")
-  .attr("d", path);
-});
+  ///////////////////////////////////////////////////////////////////
+
+  d3.json("./us.json", function(error, us) {
+    g.append("g")
+      .attr("id", "states")
+      .selectAll("path")
+        .data(topojson.feature(us, us.objects.states).features)
+      .enter().append("path")
+        .attr("d", path);
+
+  g.append("path")
+    .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+    .attr("id", "state-borders")
+    .attr("d", path);
+  });
+};
 
 ///////////////////////////////////////////////////////////////////
 // Helper Functions
@@ -68,58 +76,78 @@ var toUTC = function(date) {
 
 var globalData;
 
-var redraw = function(utc) { 
-  var filteredData = [];
-  for (var i = 0; i < globalData.length; i++) {
-    var selectUtc = new Date(globalData[i]['REPORT_RECEIVED_DATE']);
-    if (toUTC(selectUtc) <= utc) {
-      filteredData.push(globalData[i]);
-    }
-  }
-
-  toUTC(selectUtc);
-  filteredData.push()
-  circles.selectAll('.spills')
-  .data(filteredData)
-  .enter().append('svg:circle')
-    .attr('class', function(d) {
-      if (d.SIGNIFICANT === 'YES') { return 'sig' + 1; }
-      else { return 'sig' + 0 } })
-    .attr('r', function(d) {
-      if (utc >= d.UTC && d.UTC >= utc - 604800000) { return r + 4; }
-      else if (d.SIGNIFICANT === 'YES') { return r; }
-      else { return r - 1; } })
-  .attr('cx', function(d) { return projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE])[0]; })
-  .attr('cy', function(d) { return projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE])[1]; })
-};
-
 var spillData = d3.tsv("./spills.tsv", function(data) {
   globalData = data;
   data.forEach(function(d) {
     d.UTC = +toUTC(new Date(d.REPORT_RECEIVED_DATE));
   });
 });
-//   circles.selectAll('.spills')
-//   .data(data)
-//   .enter().append('svg:circle')
-//     .attr('class', function(d) { 
-//       if (d.SIGNIFICANT === 'YES') { return 'sig' + 1; }
-//       else { return 'sig' + 0 } })
-//     .attr('r', function(d) { 
-//       if (d.SIGNIFICANT === 'YES') { return r; }
-//       else { return r-1; } })
-//     .attr('test', function(d) {
-//       // the D3 projection() function will fail silently if it gets coordinates that appear
-//       // off the map - in this case, the Albers projection of the US map.
-//       // This test will console log the coordinates that make projection() fail.
-//       if (projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE]) === null) {
-//         console.log('bad data', d.REPORT_NUMBER, d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE);
-//       }})
-//   .attr('cx', function(d) { return projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE])[0]; })
-//   .attr('cy', function(d) { return projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE])[1]; })
-// });
 
-// TODO: Fix the zoom to redraw the spills
-function zoomed() {
-  // g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-}
+var redraw = function(utc) { 
+  
+  var key = function(d) {
+    return d.REPORT_NUMBER;
+  };
+
+  var r = 5;
+  var filteredData = [];
+
+  for (var i = 0; i < globalData.length; i++) {
+    if (globalData[i].UTC <= utc) {
+      filteredData.push(globalData[i]);
+    }
+  }
+  var spills = circles.selectAll('.spills')
+  .data(filteredData, key)
+
+  circles.selectAll('circle').remove();
+
+  spills.enter().append('svg:circle')
+    .attr('class', function(d) {
+      if (d.SIGNIFICANT === 'YES') { return 'sig' + 1; }
+      else { return 'sig' + 0 } })
+    .attr('r', function(d) {
+      if (d.SIGNIFICANT === 'YES') { return r; }
+      else { return r - 1; } })
+    .attr('test', function(d) {
+      // The D3 projection() function will fail silently if it gets coordinates that appear
+      // off the map - in this case, the Albers projection of the US map.
+      // This test will console log the coordinates that make projection() fail.
+      if (projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE]) === null) {
+        console.log('bad data', d.REPORT_NUMBER, d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE);
+      }
+    })
+    .attr('cx', function(d) { return projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE])[0]; })
+    .attr('cy', function(d) { return projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE])[1]; });
+
+  spills.exit().transition().remove();
+};
+
+var initSlider = function() {
+  $("#slider").slider({
+    value: 2014,
+    min: 1268179200000, //UTC of the first report_received_date in TSV, '3/10/2010'
+    max: 1409097600000, //UTC of the last report_received_date in TSV, '8/27/2014'
+    step: 6,
+    slide: function(event, ui) {
+      // console.log('event', event);
+      // console.log('ui', ui);
+      var temp = new Date(ui.value);
+      var m_names = ["January", "February", "March", "April", "May", "June", "July","August", "September", "October", "November", "December"];
+      var month = m_names[temp.getMonth()];
+      // Add + 1 to day to compensate for UTC vs. US time zones.
+      var displayDate = '' + month + ' ' + (temp.getDate() + 1) + ', ' + temp.getFullYear();
+      $("#date").html(displayDate);
+      // console.log(ui.value);
+      redraw(ui.value);
+    }
+  });
+};
+// var$("#date").val($("#slider").slider("value"));
+
+// Initialization function
+$(function(){
+  initSlider();
+  $(window).on('resize', resize);
+  resize();
+});

@@ -1,55 +1,37 @@
 <html>
 <head>
   <title>Spilling Me Softly</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="./styles.css">
 </head>
 <body>
-  <h2>#SpillingMeSoftly: Pipeline spills in the United States, 2010 to 2014</h2>
+  <div id='container'>
+    <div id="header">
+      <h2>#SpillingMeSoftly: Pipeline Spills in the United States, 2010 to 2014</h2>
+    </div>
+    <div id='content'>
+      <div id='map'>
+
+      </div>
+      <div id="sliderContainer">
+        <div id="slider"></div>
+        <p>
+          <span>Spill Reported:</span> <span id="date" value="March 10, 2010"></span>
+          <!-- <input type="text" id="date" style="border:0; color:#f6931f; font-weight:bold;" value="March 10, 2010" /> -->
+        </p>
+      </div>
+  </div>
+  <footer id="footer">
+  Version: 1/26/2015 <a href="http://www.teachrdan.com" onclick="window.open(this.href); return false;">Dan Tennery-Spalding</a> <a href="https://github.com/teachrdan/" onclick="window.open(this.href); return false;">@teachrdan</a> (<a href="https://twitter.com/teachrdan" onclick="window.open(this.href); return false;">everything</a>) Thanks to <a href="http://bost.ocks.org/mike/" onclick="window.open(this.href); return false;">M. Bostock</a>, <a href="http://www.propublica.org/article/pipelines-explained-how-safe-are-americas-2.5-million-miles-of-pipelines" onclick="window.open(this.href); return false;">ProPublica's</a> <a href="http://lenagroeger.com/" onclick="window.open(this.href); return false;">Lana Groeger</a> & the <a href="http://primis.phmsa.dot.gov/comm/reports/safety/PSI.html?nocache=3401" onclick="window.open(this.href); return false;">US Department of Transportation</a>
+  <br><br>
+  </footer>
+</div>
   <script src="/lib/jquery.js" charset="utf-8"></script>
   <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" />
   <script src="/lib/d3.v3.min.js" charset="utf-8"></script>
   <script src="http://d3js.org/topojson.v1.min.js"></script>
   <script src="./spills.js" charset="utf-8"></script>
-
-  <div style="margin-left:45%">
-    <div id="slider" style="width: 200px; height: 10px;"></div>
-    <p>
-      <label for="date">Spill Reported:</label>
-      <input type="text" id="date" style="border:0; color:#f6931f; font-weight:bold;" value="March 10, 2010" />
-    </p>
-  </div>
-<script type="text/javascript">
-
-  $(document).ready(function() {
-    $("#slider").slider({
-      value: 2014,
-      min: 1268179200000, //UTC of the first report_received_date in TSV, '3/10/2010'
-      max: 1409097600000, //UTC of the last report_received_date in TSV, '8/27/2014'
-      step: 6,
-      slide: function(event, ui) {
-        // console.log('event', event);
-        // console.log('ui', ui);
-        var temp = new Date(ui.value);
-        var m_names = ["January", "February", "March", "April", "May", "June", "July","August", "September", "October", "November", "December"];
-        var month = m_names[temp.getMonth()];
-        // Add + 1 to day to compensate for UTC vs. US time zones.
-        displayDate = '' + month + ' ' + (temp.getDate() + 1) + ', ' + temp.getFullYear();
-        $("#date").val(displayDate);
-        // console.log(ui.value);
-        redraw(ui.value);
-      }
-    });
-  });
-  $("#date").val($("#slider").slider("value"));
-</script>
-<footer>
-Version: 1/26/2015<br>
-<a href="http://www.teachrdan.com" onclick="window.open(this.href); return false;">Dan Tennery-Spalding</a><br>
-<a href="https://github.com/teachrdan/" onclick="window.open(this.href); return false;">@teachrdan</a> (<a href="https://twitter.com/teachrdan" onclick="window.open(this.href); return false;">everything</a>)<br>
-Thanks to <a href="http://bost.ocks.org/mike/" onclick="window.open(this.href); return false;">M. Bostock</a>,<br>
-<a href="http://www.propublica.org/article/pipelines-explained-how-safe-are-americas-2.5-million-miles-of-pipelines" onclick="window.open(this.href); return false;">ProPublica's</a> <a href="http://lenagroeger.com/" onclick="window.open(this.href); return false;">Lana Groeger</a><br>
-& the <a href="http://primis.phmsa.dot.gov/comm/reports/safety/PSI.html?nocache=3401" onclick="window.open(this.href); return false;">US Department of Transportation</a>
-</footer>
+  <script type="text/javascript">
+  </script>
 </body>
 </html>

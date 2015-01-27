@@ -9,10 +9,12 @@ h2 {
 }
 
 footer {
-    color: #888888;
-    font-size: 10px;
-    text-align: right;
-    margin-right: 20%;
+  color: #888888;
+  font-size: 10px;
+}
+
+div, footer {
+  box-sizing: border-box;
 }
 
 a:link {
@@ -43,6 +45,19 @@ a:active {
   pointer-events: all;
 }
 
+#container {
+  width: 100%;
+  height: 100%;
+}
+
+.sig0 {
+  fill: black;
+}
+
+.sig1 {
+  fill: red;
+}
+
 #states {
   fill: #007b00;
 }
@@ -56,14 +71,14 @@ a:active {
   pointer-events: none;
 }
 
-.sig0 {
-  fill: black;
+#slider {
+  width: 200px;
+  height: 10px;
+  margin: auto;
 }
 
-.sig1 {
-  fill: red;
-}
-
-.selectedWeek {
-
+#sliderContainer {
+  width: 250px;
+  margin: auto;
+  text-align: center;
 }
