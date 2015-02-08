@@ -1,5 +1,5 @@
-var express     = require('express'),
-    mongoose    = require('mongoose');
+var express = require('express');
+var mongoose = require('mongoose');
 
 var app = express();
 
@@ -10,3 +10,4 @@ mongoose.connect('mongodb://localhost/spills');
 
 // export our app for testing and flexibility, required by index.js
 module.exports = app;
+
