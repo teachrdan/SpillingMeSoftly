@@ -82,3 +82,7 @@ a:active {
   margin: auto;
   text-align: center;
 }
+
+#twitterButton {
+  margin-top: 10px;
+}
