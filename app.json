@@ -1,7 +1,7 @@
 {
-  "name": "Node.js Getting Started",
-  "description": "A barebones Node.js app using Express 4",
-  "repository": "https://github.com/heroku/node-js-getting-started",
-  "logo": "http://node-js-sample.herokuapp.com/node.svg",
-  "keywords": ["node", "express", "static"]
+  "name": "Spilling Me Softly",
+  "description": "A data visualization of pipeline spills across the US using D3.js.",
+  "repository": "https://github.com/teachrdan/SpillingMeSoftly",
+  "logo": "http://node-js-sample.herokuapp.com/logo.png",
+  "keywords": ["node", "express", "D3.js"]
 }
