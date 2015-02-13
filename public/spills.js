@@ -9,7 +9,6 @@ var resize = function() {
   drawMap();
 };
 
-
 var drawMap = function() {
 
   var height = $('#content').height() - $('#sliderContainer').outerHeight(true);
@@ -109,16 +108,22 @@ var redraw = function(utc) {
     .attr('r', function(d) {
       if (d.SIGNIFICANT === 'YES') { return r; }
       else { return r - 1; } })
-    .attr('test', function(d) {
-      // The D3 projection() function will fail silently if it gets coordinates that appear
-      // off the map - in this case, the Albers projection of the US map.
-      // This test will console log the coordinates that make projection() fail.
-      if (projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE]) === null) {
-        console.log('bad data', d.REPORT_NUMBER, d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE);
-      }
-    })
+    // .attr('test', function(d) {
+    //   // The D3 projection() function will fail silently if it gets coordinates that appear
+    //   // off the map - in this case, the Albers projection of the US map.
+    //   // This test will console.log the coordinates that make projection() fail.
+    //   if (projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE]) === null) {
+    //     console.log('bad data', d.REPORT_NUMBER, d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE);
+    //   }
+    // })
     .attr('cx', function(d) { return projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE])[0]; })
-    .attr('cy', function(d) { return projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE])[1]; });
+    .attr('cy', function(d) { return projection([d.LOCATION_LONGITUDE, d.LOCATION_LATITUDE])[1]; })
+    .append('svg:title')
+    .attr('class', 'tooltip')
+    .text(function(d) {
+      var firstWords = d.NARRATIVE.split(' ').slice(0,34).join(' ');
+      return "Company: " + d.NAME + ', Narrative: ' + firstWords + '...';
+    });
 
   spills.exit().transition().remove();
 };
@@ -143,7 +148,6 @@ var initSlider = function() {
     }
   });
 };
-// var$("#date").val($("#slider").slider("value"));
 
 // Initialization function
 $(function(){

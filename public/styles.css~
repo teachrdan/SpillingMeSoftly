@@ -3,19 +3,18 @@ h1 {
   font-family: sans-serif;
 }
 
-h2, p {
+h2 {
   text-align: left;
   margin-left: 10%;
 }
 
-div, footer {
-  box-sizing: border-box;
-}
-
 footer {
-  text-align: left;
   color: #888888;
   font-size: 14px;
+}
+
+div, footer {
+  box-sizing: border-box;
 }
 
 a:link {
@@ -85,7 +84,10 @@ a:active {
   text-align: center;
 }
 
+.tooltip {
+  white-space:pre-wrap;
+}
+
 #twitterButton {
-  margin-left: 10%;
   margin-top: 10px;
 }
