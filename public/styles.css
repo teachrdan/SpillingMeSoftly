@@ -1,43 +1,42 @@
-h1 {
-  text-align: center;
-  font-family: sans-serif;
-}
-
-h2, p {
+h2 {
   text-align: left;
   margin-left: 10%;
+  margin-bottom: 8;
 }
 
-div, footer {
+div {
   box-sizing: border-box;
 }
 
 footer {
-  text-align: left;
-  color: #888888;
+  margin-left: 10%;
+  box-sizing: border-box;
+  font-size:2vmin
+}
+
+p {
   font-size: 14px;
+  margin-left: 10%;
+  text-align: left;
 }
 
 a:link {
-  color: #888888;
+  color: black;
   text-decoration: none;
 }
 
-/* visited link */
 a:visited {
-  color: #888888;
+  color: black;
   text-decoration: none;
 }
 
-/* mouse over link */
 a:hover {
-  color: #888888;
+  color: black;
   text-decoration: none;
 }
 
-/* selected link */
 a:active {
-  color: #888888;
+  color: black;
   text-decoration: none;
 }
 
@@ -46,9 +45,19 @@ a:active {
   pointer-events: all;
 }
 
+#byline {
+  font-color: gray;
+  font-size: 10px;
+  margin-left: 10%;
+}
+
 #container {
   width: 100%;
   height: 100%;
+}
+
+#content {
+  margin-left: 10%;
 }
 
 .sig0 {
@@ -61,7 +70,7 @@ a:active {
 
 #states {
   fill: #007b00;
-  opacity: .4;
+  opacity: .45;
 }
 
 #state-borders {
@@ -74,7 +83,8 @@ a:active {
 }
 
 #slider {
-  width: 200px;
+  /*width: 200px;*/
+  width: 100%;
   height: 10px;
   margin: auto;
 }
@@ -87,5 +97,5 @@ a:active {
 
 #twitterButton {
   margin-left: 10%;
-  margin-top: 10px;
+  margin-bottom: 5;
 }
