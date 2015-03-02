@@ -10,20 +10,20 @@
       <div id="twitterButton">
         <a href="https://twitter.com/share" class="twitter-share-button" data-text="Check #SpillingMeSoftly, a data visualization of 5 yrs of pipeline spills across the US" data-via="teachrdan">Tweet</a>
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-        <span style="font-size:2vmin">
+        <span>
         <a href="http://d3js.org/" onclick="window.open(this.href); return false;">A D3.js</a>
-        web app by <a href="http://www.teachrdan.com" onclick="window.open(this.href); return false;">"@Teachrdan" Tennery-Spalding</a>. (<a href="https://github.com/teachrdan/" onclick="window.open(this.href); return false;">GitHub</a> | <a href="https://twitter.com/teachrdan/" onclick="window.open(this.href); return false;">Twitter</a>)<br>
-        Move the slider at at the bottom to see a data visualization of 1700+ pipeline spills.
+        web app by Dan Tennery-Spalding</a>. (<a href="https://github.com/teachrdan/" onclick="window.open(this.href); return false;">GitHub</a> | <a href="https://twitter.com/teachrdan/" onclick="window.open(this.href); return false;">Twitter</a> | <a href="http://www.teachrdan.com" onclick="window.open(this.href); return false;">Blog)<br>
+        Move the slider below to see a data visualization of 1700+ pipeline spills.
         <br><b><i>Hover</i></b> over dots to get more information. <b style="color:red;">Red dots</b> represent serious spills.<br>
       </span>
       <br>
       </div>
-        <div id="sliderContainer">
-          <div id="slider"></div>
-            <span style='font-size:12px;'>Spill Reported:</span> <span style='font-size:12px;' id="date" value="March 10, 2010"></span>
-          <!-- <input type="text" id="date" style="border:0; color:#f6931f; font-weight:bold;" value="March 10, 2010" /> -->
+        <div id="sliderContainer" style="margin-left: 10%">
+          <div id="slider"><br>
+            <span style="font-size:2vmin;">Slide for week of</span> <span value="1268179200000" style="font-size:2vmin" id="date">...</span>
         </div>
     </div>
+    <br><br>
     <div id='content'>
       <div id='map'>
       </div>
@@ -31,7 +31,7 @@
     </div>
   <footer id="footer">
     Thanks to <a href="http://www.propublica.org/article/pipelines-explained-how-safe-are-americas-2.5-million-miles-of-pipelines" onclick="window.open(this.href); return false;">ProPublica's</a> <a href="http://lenagroeger.com/" onclick="window.open(this.href); return false;">Lana Groeger</a> & the <a href="http://primis.phmsa.dot.gov/comm/reports/safety/PSI.html?nocache=3401" onclick="window.open(this.href); return false;">US Department of Transportation</a>.
-    Special thanks go to <a href="https://github.com/michalgm" onclick="window.open(this.href); return false;">Greg Michalec</a>
+    Special thanks to <a href="https://github.com/michalgm" onclick="window.open(this.href); return false;">Greg Michalec</a>.
   <br><br>
   </footer>
 </div>

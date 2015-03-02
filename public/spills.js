@@ -135,15 +135,16 @@ var initSlider = function() {
     max: 1409097600000, //UTC of the last report_received_date in TSV, '8/27/2014'
     step: 6,
     slide: function(event, ui) {
-      // console.log('event', event);
-      // console.log('ui', ui);
       var temp = new Date(ui.value);
       var m_names = ["January", "February", "March", "April", "May", "June", "July","August", "September", "October", "November", "December"];
       var month = m_names[temp.getMonth()];
       // Add + 1 to day to compensate for UTC vs. US time zones.
       var displayDate = '' + month + ' ' + (temp.getDate() + 1) + ', ' + temp.getFullYear();
-      $("#date").html(displayDate);
-      // console.log(ui.value);
+      if (!ui.value) {
+        $("#date").html(1268179200000);
+      } else {
+        $("#date").html(displayDate);
+      }
       redraw(ui.value);
     }
   });
