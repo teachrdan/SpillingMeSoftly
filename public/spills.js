@@ -55,7 +55,7 @@ var drawMap = function() {
 
 ///////////////////////////////////////////////////////////////////
 // Helper Functions
-// 
+//
 // toUTC converts JS Date objects to UTC
 // EXAMPLE: var date = new Date('3/10/2010');
 // toUTC(date); // evaluates to 1268179200000
@@ -70,7 +70,7 @@ var toUTC = function(date) {
       date.getMilliseconds()
   );
 };
-// 
+//
 ///////////////////////////////////////////////////////////////////
 
 var globalData;
@@ -82,8 +82,8 @@ var spillData = d3.tsv("./spills.tsv", function(data) {
   });
 });
 
-var redraw = function(utc) { 
-  
+var redraw = function(utc) {
+
   var key = function(d) {
     return d.REPORT_NUMBER;
   };
@@ -136,7 +136,7 @@ var initSlider = function() {
     step: 6,
     slide: function(event, ui) {
       var temp = new Date(ui.value);
-      var m_names = ["January", "February", "March", "April", "May", "June", "July","August", "September", "October", "November", "December"];
+      var m_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
       var month = m_names[temp.getMonth()];
       // Add + 1 to day to compensate for UTC vs. US time zones.
       var displayDate = '' + month + ' ' + (temp.getDate() + 1) + ', ' + temp.getFullYear();
