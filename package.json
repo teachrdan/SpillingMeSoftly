@@ -26,6 +26,7 @@
   "homepage": "https://github.com/teachrdan/SpillingMeSoftly",
   "dependencies": {
     "express": "^4.11.2",
+    "gulp-gh-pages": "^0.5.4",
     "node": "0.0.0"
   }
 }
